@@ -1,3 +1,3 @@
-import server from './server'
+import index from '.';
 
-server.listen(3000)
+index.listen(3000);
