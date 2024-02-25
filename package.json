@@ -1,7 +1,7 @@
 {
   "name": "vehicles-register",
   "version": "1.0.0",
-  "description": "Vehicles register using Express and MongoDB",
+  "description": "Vehicles register using Express, MongoDB and Jest",
   "main": "index.js",
   "scripts": {
     "start": "node ./dist/src/app.js",
