@@ -54,7 +54,7 @@ export class Server {
       const swaggerOptions = this.getSwaggerOptions();
       this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJSDoc(swaggerOptions)));
       this.app.use(express.json());
-      this.app.use('/vehicles', this.vehicleRoutes.getRouter());
+      this.app.use('/', this.vehicleRoutes.getRouter());
     } catch (error) {
       console.error('Error connecting to the database:', error);
       throw error;

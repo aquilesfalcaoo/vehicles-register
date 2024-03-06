@@ -10,7 +10,7 @@ export class VehiclesRoutes {
   }
 
   private initializeRoutes (): void {
-    this.router.get('/', this.vehiclesController.getVehicles.bind(this.vehiclesController));
+    this.router.get('/vehicles', this.vehiclesController.getVehicles.bind(this.vehiclesController));
   }
 
   public getRouter (): Router {
