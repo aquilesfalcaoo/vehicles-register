@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 export class DataBase {
   static async connect(): Promise<mongoose.Connection> {
     try {
-      await mongoose.connect('mongodb+srv://admin:admin@cluster.3sdcndl.mongodb.net/vehicles?retryWrites=true&w=majority');
+      await mongoose.connect(process.env.DB_CONNECTION_STRING as string);
       return mongoose.connection;
     } catch (error) {
       throw error;
