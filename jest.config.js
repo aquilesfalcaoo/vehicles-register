@@ -1,7 +1,11 @@
+const { compilerOptions } = require("./tsconfig.json");
+const { pathsToModuleNameMapper } = require("ts-jest/utils");
+
 module.exports = {
   clearMocks: true,
-  coverageDirectory: "coverage",
-  moduleFileExtensions: ["js", "json", "jsx", "ts", "tsx", "node"],
-  testEnvironment: "node",
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
+    prefix: "<rootDir>",
+  }),
   preset: "ts-jest",
+  testEnvironment: "node",
 };
