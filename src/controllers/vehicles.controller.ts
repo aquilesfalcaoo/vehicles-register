@@ -1,11 +1,10 @@
 import { Request, Response } from 'express';
 import { VehiclesModel } from '../models/vehicles.model';
 
-
 export class VehiclesController {
   private vehiclesModel: VehiclesModel;
 
-  constructor() {
+  constructor () {
     this.vehiclesModel = new VehiclesModel();
   }
 
@@ -18,7 +17,7 @@ export class VehiclesController {
    *      '200':
    *        description: Vehicles successfully returned.
    */
-  public async getVehicles(req: Request, res: Response): Promise<void> {
+  public async getVehicles (req: Request, res: Response): Promise<void> {
     try {
       const vehiclesList = await this.vehiclesModel.getVehicles();
       res.status(200).json(vehiclesList);
