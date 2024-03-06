@@ -23,7 +23,21 @@ export class Server {
           title: "Vehicles Register",
           version: "1.0.0",
           description: "Vehicles register using Express.js, MongoDB and Jest",
+          license: {
+            name: 'Licensed Under MIT',
+            url: 'https://spdx.org/licenses/MIT.html',
+          },
+          contact: {
+            name: 'JSONPlaceholder',
+            url: 'https://jsonplaceholder.typicode.com',
+          },
         },
+        servers: [
+          {
+            url: 'http://localhost:3000',
+            description: 'Development server',
+          },
+        ],
       },
       apis: ["./src/controllers/*.ts"]
     };
