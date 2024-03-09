@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 import { VehiclesRoutes } from './routes/vehicles.routes';
 import { DataBase } from './config/db.config';
@@ -24,8 +25,8 @@ export class Server {
       this.setupSwagger();
       this.setupMiddleware();
       this.setupRoutes();
-    } catch (error) {
-      console.error('Error connecting to the database:', error);
+    } catch (error: any) {
+      console.error(`❌[database]: Error connecting to the database: `, error.message);
       throw error;
     }
   }
@@ -48,7 +49,7 @@ export class Server {
         console.log(`⚡️[server]: Server is running at http://localhost:${this.port}`);
       });
     }).catch(error => {
-      console.error('Failed to start server:', error);
+      console.error(`❌[server]: Failed to start server: `, error.message);
     });
   }
 }
