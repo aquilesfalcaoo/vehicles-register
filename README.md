@@ -1,5 +1,6 @@
 <h2 align="center">Vehicle Register - CRUD Application</h2>
 
+![screenshot](https://raw.githubusercontent.com/aquilesfalcaoo/vehicles-register/main/src/views/img/crud.png)
 <p align="center">
   <img src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white" />
   <img src="https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white" />
@@ -8,8 +9,6 @@
   <img src="https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white" />
   <img src="https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white" />
 </p>
-
-![screenshot](https://raw.githubusercontent.com/aquilesfalcaoo/vehicles-register/main/src/views/img/crud.png)
 
 ## How To Use
 
