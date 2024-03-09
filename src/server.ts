@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
-import express, { Express } from 'express';
-import swaggerJSDoc from 'swagger-jsdoc';
-import swaggerUi from 'swagger-ui-express';
 import { VehiclesRoutes } from './routes/vehicles.routes';
 import { DataBase } from './config/db.config';
+import express, { Express } from 'express';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from "../swagger.json";
 
 export class Server {
   private app: Express;
@@ -14,36 +14,6 @@ export class Server {
     this.app = express();
     this.port = port;
     this.vehicleRoutes = new VehiclesRoutes();
-  }
-
-  private getSwaggerOptions (): swaggerJSDoc.Options {
-    const options: swaggerJSDoc.Options = {
-      definition: {
-        openapi: '3.0.0',
-        info: {
-          title: 'Vehicles Register',
-          version: '1.0.0',
-          description: 'Vehicles register using Express.js, MongoDB and Jest',
-          license: {
-            name: 'Licensed Under MIT',
-            url: 'https://spdx.org/licenses/MIT.html'
-          },
-          contact: {
-            name: 'JSONPlaceholder',
-            url: 'https://jsonplaceholder.typicode.com'
-          }
-        },
-        servers: [
-          {
-            url: 'http://localhost:3000',
-            description: 'Development server'
-          }
-        ]
-      },
-      apis: ['./src/controllers/*.ts']
-    };
-
-    return options;
   }
 
   private async setup (): Promise<void> {
@@ -61,8 +31,7 @@ export class Server {
   }
 
   private setupSwagger(): void {
-    const swaggerOptions = this.getSwaggerOptions();
-    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJSDoc(swaggerOptions)));
+    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   }
 
   private setupMiddleware(): void {

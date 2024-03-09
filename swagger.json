@@ -1,0 +1,144 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Vehicles Register",
+    "version": "1.0.0",
+    "description": "Vehicles register using Express.js, MongoDB and Jest"
+  },
+  "paths": {
+    "/vehicles": {
+      "get": {
+        "tags": ["Vehicles"],
+        "summary": "Endpoint for obtaining vehicles data.",
+        "responses": {
+          "200": {
+            "description": "Vehicles successfully returned."
+          }
+        }
+      },
+      "post": {
+        "tags": ["Vehicles"],
+        "summary": "Endpoint for add a new vehicle data.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "model": {
+                    "type": "string"
+                  },
+                  "vehicleModel": {
+                    "type": "string"
+                  },
+                  "isZeroKm": {
+                    "type": "boolean"
+                  },
+                  "color": {
+                    "type": "string"
+                  },
+                  "renavam": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Vehicle added successfully."
+          }
+        }
+      }
+    },
+    "/vehicles/{id}": {
+      "get": {
+        "tags": ["Vehicles"],
+        "summary": "Endpoint for obtaining a vehicle data by id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Id of the vehicle to retrieve.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Vehicle successfully returned."
+          }
+        }
+      },
+      "put": {
+        "tags": ["Vehicles"],
+        "summary": "Endpoint for updating a vehicle data by id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Id of the vehicle to update.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "model": {
+                    "type": "string"
+                  },
+                  "vehicleModel": {
+                    "type": "string"
+                  },
+                  "isZeroKm": {
+                    "type": "boolean"
+                  },
+                  "color": {
+                    "type": "string"
+                  },
+                  "renavam": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Vehicle updated successfully."
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Vehicles"],
+        "summary": "Endpoint for delete a vehicle data by id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Id of the vehicle to delete.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Vehicle removed successfully."
+          }
+        }
+      }
+    }
+  }
+}

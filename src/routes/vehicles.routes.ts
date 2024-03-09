@@ -1,5 +1,5 @@
-import express, { Router, Request, Response } from 'express';
 import { VehiclesController } from '../controllers/vehicles.controller';
+import express, { Router, Request, Response } from 'express';
 
 export class VehiclesRoutes {
   private router: Router = express.Router();

@@ -9,15 +9,6 @@ export class VehiclesController {
     this.vehiclesModel = new VehiclesModel();
   }
 
-  /**
-   * @swagger
-   * /vehicles:
-   *  get:
-   *    summary: Endpoint for obtaining vehicles data.
-   *    responses:
-   *      '200':
-   *        description: Vehicles successfully returned.
-   */
   public async getVehicles (req: Request, res: Response): Promise<void> {
     try {
       const vehiclesList = await this.vehiclesModel.getVehicles();
@@ -27,31 +18,6 @@ export class VehiclesController {
     }
   }
 
-  /**
- * @swagger
- * /vehicles:
- *  post:
- *    summary: Endpoint for add a new vehicle data.
- *    requestBody:
- *      content:
- *        application/json:
- *          schema:
- *            type: object
- *            properties:
- *              model:
- *                type: string
- *              vehicleModel:
- *                type: string
- *              isZeroKm:
- *                type: boolean
- *              color:
- *                type: string
- *              renavam:
- *                type: string
- *    responses:
- *      '200':
- *        description: Vehicle added successfully.
- */
   public async addVehicle(req: Request, res: Response): Promise<void> {
     try {
       const newVehicle = await this.vehiclesModel.addVehicle(req.body);
@@ -61,15 +27,6 @@ export class VehiclesController {
     }
   }
 
-  /**
- * @swagger
- * /vehicles/id:
- *  get:
- *    summary: Endpoint for obtaining a vehicle data by id.
- *    responses:
- *      '200':
- *        description: Vehicle successfully returned.
- */
   public async getVehicleById(req: Request, res: Response): Promise<void> {
     try {
       const id = req.params.id;
@@ -84,31 +41,6 @@ export class VehiclesController {
     }
   }
 
-  /**
- * @swagger
- * /vehicles/id:
- *  put:
- *    summary: Endpoint for update a vehicle data.
- *    requestBody:
- *      content:
- *        application/json:
- *          schema:
- *            type: object
- *            properties:
- *              model:
- *                type: string
- *              vehicleModel:
- *                type: string
- *              isZeroKm:
- *                type: boolean
- *              color:
- *                type: string
- *              renavam:
- *                type: string
- *    responses:
- *      '200':
- *        description: Vehicle updated with successfully.
- */
   public async updateVehicle (req: Request, res: Response): Promise<void> {
     try {
       const id = req.params.id;
@@ -119,15 +51,6 @@ export class VehiclesController {
     }
   }
 
-  /**
- * @swagger
- * /vehicles/id:
- *  delete:
- *    summary: Endpoint for delete a vehicle data.
- *    responses:
- *      '200':
- *        description: Vehicle removed with successfully.
- */
   public async deleteVehicle (req: Request, res: Response): Promise<void> {
     try {
       const id = req.params.id;
