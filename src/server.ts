@@ -49,22 +49,34 @@ export class Server {
   private async setup (): Promise<void> {
     try {
       await DataBase.connect();
-      console.log('Connected to the database');
+      console.log(`⚡️[database]: Connected to the database MongoDB`);
 
-      const swaggerOptions = this.getSwaggerOptions();
-      this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJSDoc(swaggerOptions)));
-      this.app.use(express.json());
-      this.app.use('/', this.vehicleRoutes.getRouter());
+      this.setupSwagger();
+      this.setupMiddleware();
+      this.setupRoutes();
     } catch (error) {
       console.error('Error connecting to the database:', error);
       throw error;
     }
   }
 
+  private setupSwagger(): void {
+    const swaggerOptions = this.getSwaggerOptions();
+    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJSDoc(swaggerOptions)));
+  }
+
+  private setupMiddleware(): void {
+    this.app.use(express.json());
+  }
+
+  private setupRoutes(): void {
+    this.app.use('/', this.vehicleRoutes.getRouter());
+  }
+
   public start (): void {
     this.setup().then(() => {
       this.app.listen(this.port, () => {
-        console.log(`Server is running on port ${this.port}`);
+        console.log(`⚡️[server]: Server is running at http://localhost:${this.port}`);
       });
     }).catch(error => {
       console.error('Failed to start server:', error);

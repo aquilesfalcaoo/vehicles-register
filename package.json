@@ -9,7 +9,7 @@
     "start": "node dist/server.js",
     "lint": "eslint . --ext .js,.ts",
     "lint:fix": "eslint . --ext .js,.ts --fix",
-    "dev": "npm run lint && ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify ./index.ts",
+    "dev": "yarn run lint && ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify ./index.ts",
     "test": "jest",
     "test:watch": "jest --watch",
     "coverage": "jest --coverage"
