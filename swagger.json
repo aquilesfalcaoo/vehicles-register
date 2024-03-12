@@ -28,11 +28,11 @@
                   "model": {
                     "type": "string"
                   },
-                  "vehicleModel": {
-                    "type": "string"
-                  },
                   "isZeroKm": {
                     "type": "boolean"
+                  },
+                  "licensePlate": {
+                    "type": "string"
                   },
                   "color": {
                     "type": "string"
@@ -96,11 +96,11 @@
                   "model": {
                     "type": "string"
                   },
-                  "vehicleModel": {
-                    "type": "string"
-                  },
                   "isZeroKm": {
                     "type": "boolean"
+                  },
+                  "licensePlate": {
+                    "type": "string"
                   },
                   "color": {
                     "type": "string"

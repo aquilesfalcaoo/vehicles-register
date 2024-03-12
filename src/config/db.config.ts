@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-catch */
 import mongoose from 'mongoose';
 
-export class DataBase {
+export class Database {
   static async connect(): Promise<mongoose.Connection> {
     try {
       await mongoose.connect(process.env.DB_CONNECTION_STRING as string);

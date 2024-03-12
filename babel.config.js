@@ -1,27 +1,27 @@
 module.exports = {
   presets: [
     [
-      "@babel/preset-env",
+      '@babel/preset-env',
       {
         targets: {
-          node: "current",
+          node: 'current',
         },
       },
     ],
-    "@babel/preset-typescript",
+    '@babel/preset-typescript',
   ],
   plugins: [
     [
-      "module-resolver",
+      'module-resolver',
       {
         alias: {
-          "@config": "./src/config",
-          "@models": "./src/models",
-          "@controllers": "./src/controllers",
-          "@views": "./src/views",
+          '@config': './src/config',
+          '@models': './src/models',
+          '@controllers': './src/controllers',
+          '@views': './src/views',
         },
       },
     ],
   ],
-  ignore: ["**/*.spec.ts"],
+  ignore: ['**/*.spec.ts'],
 };
