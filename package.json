@@ -17,6 +17,9 @@
     "coverage": "jest --coverage"
   },
   "license": "MIT",
+  "engines": {
+    "node": "22.x"
+  },
   "resolutions": {
     "@types/express": "4.17.25",
     "@types/express-serve-static-core": "4.19.8",
