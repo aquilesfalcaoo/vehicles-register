@@ -1,4 +1,4 @@
-# 🚗 Vehicle Register REST API
+# 🚗 Vehicle Registry REST API
 
 A RESTful API developed with Node.js, TypeScript, Express.js and MongoDB following Object-Oriented Programming (OOP) principles and a layered architecture.
 
@@ -27,6 +27,7 @@ The project was designed following Object-Oriented Programming (OOP) principles 
 - Config
 - Models
 - Routes
+- Utils
 
 ## ✨ Features
 
