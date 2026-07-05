@@ -37,7 +37,6 @@ The project was designed following Object-Oriented Programming (OOP) principles 
 - MongoDB Integration
 - Swagger Documentation
 - Automated Testing with Jest
-- Error Handling
 
 ## ⚙️ Installation
 
