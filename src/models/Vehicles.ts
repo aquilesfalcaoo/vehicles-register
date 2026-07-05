@@ -1,22 +1,28 @@
-import mongoose, { Schema, Model } from 'mongoose';
+import mongoose, { Schema, Model, Types } from 'mongoose';
 
-export interface VehiclesProps {
+export interface Vehicle {
+  _id?: Types.ObjectId;
   model: string;
   isZeroKm: boolean;
   licensePlate: string;
   color: string;
   renavam: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
-const vehicleSchema: Schema<VehiclesProps> = new Schema(
+const vehicleSchema: Schema<Vehicle> = new Schema(
   {
-    model: { type: String, required: true },
+    model: { type: String, trim: true, required: true },
     isZeroKm: { type: Boolean, required: true },
-    licensePlate: { type: String, required: true },
-    color: { type: String, required: true },
-    renavam: { type: String, required: true },
+    licensePlate: { type: String, trim: true, uppercase: true, required: true },
+    color: { type: String, trim: true, required: true },
+    renavam: { type: String, trim: true, required: true },
   },
-  { versionKey: false },
+  {
+    versionKey: false,
+    timestamps: true,
+  },
 );
 
-export const VehiclesModel: Model<VehiclesProps> = mongoose.model<VehiclesProps>('vehicles', vehicleSchema);
+export const VehiclesModel: Model<Vehicle> = mongoose.model<Vehicle>('vehicles', vehicleSchema);

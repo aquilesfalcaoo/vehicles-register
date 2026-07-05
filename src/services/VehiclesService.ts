@@ -1,26 +1,37 @@
-import { VehiclesModel, VehiclesProps } from '../models/Vehicles';
+import { VehiclesModel, Vehicle } from '../models/Vehicles';
 
 export class VehiclesService {
-  async getVehicles(): Promise<VehiclesProps[]> {
-    const vehiclesList = await VehiclesModel.find({});
-    return vehiclesList;
+  async getVehicles(): Promise<Vehicle[]> {
+    return VehiclesModel.find({}).lean();
   }
 
-  async addVehicle(data: VehiclesProps): Promise<VehiclesProps> {
+  async addVehicle(data: Vehicle): Promise<Vehicle> {
     const newVehicle = await VehiclesModel.create(data);
-    return newVehicle.toObject();
+    return newVehicle.toObject() as Vehicle;
   }
 
-  async getVehicleById(id: string): Promise<VehiclesProps | null> {
-    const vehicleFounded = await VehiclesModel.findById(id);
-    return vehicleFounded;
+  async getVehicleById(id: string): Promise<Vehicle | null> {
+    if (!id) return null;
+
+    const vehicle = await VehiclesModel.findById(id).lean();
+    return vehicle as Vehicle | null;
   }
 
-  async updateVehicle(id: string, data: VehiclesProps): Promise<void> {
-    await VehiclesModel.findByIdAndUpdate(id, data);
+  async updateVehicle(id: string, data: Vehicle): Promise<Vehicle | null> {
+    if (!id) return null;
+
+    const updatedVehicle = await VehiclesModel.findByIdAndUpdate(id, data, {
+      new: true,
+      runValidators: true,
+    }).lean();
+
+    return updatedVehicle as Vehicle | null;
   }
 
-  async deleteVehicle(id: string): Promise<void> {
-    await VehiclesModel.findByIdAndDelete(id);
+  async deleteVehicle(id: string): Promise<boolean> {
+    if (!id) return false;
+
+    const deletedVehicle = await VehiclesModel.findByIdAndDelete(id);
+    return Boolean(deletedVehicle);
   }
 }

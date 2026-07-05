@@ -1,52 +1,53 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import 'dotenv/config';
-import { VehiclesRoutes } from './routes/VehiclesRoutes';
-import { Database } from './config/db.config';
-import express from 'express';
+import express, { NextFunction, Request, Response, Express } from 'express';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from '../swagger.json';
+import { VehiclesRoutes } from './routes/VehiclesRoutes';
+import { Database } from './config/db.config';
+import { Server as HttpServer, IncomingMessage, ServerResponse } from 'http';
 
-const app = express();
-const port = 3000;
-const vehicleRoutes = new VehiclesRoutes();
+export function createApp(): Express {
+  const app = express();
 
-async function setup(): Promise<void> {
-  try {
-    await Database.connect();
-    console.log(`⚡️[database]: Connected to the database MongoDB`);
-
-    setupSwagger();
-    setupMiddleware();
-    setupRoutes();
-  } catch (error: any) {
-    console.error(`❌[database]: Error connecting to the database: `, error.message);
-    throw error;
-  }
-}
-
-function setupSwagger(): void {
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-}
-
-function setupMiddleware(): void {
+  app.disable('x-powered-by');
   app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+  app.use('/', new VehiclesRoutes().getRouter());
+
+  app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
+    console.error(err);
+    res.status(500).json({ message: 'Erro interno do servidor' });
+  });
+
+  return app;
 }
 
-function setupRoutes(): void {
-  app.use('/', vehicleRoutes.getRouter());
+export async function startServer(): Promise<HttpServer<typeof IncomingMessage, typeof ServerResponse>> {
+  await Database.connect();
+
+  const app = createApp();
+  const port = Number(process.env.PORT) || 3000;
+
+  const server = app.listen(port, () => {
+    console.log(`⚡️[server]: Server is running at http://localhost:${port}/`);
+  });
+
+  const shutdown = () => {
+    server.close(() => process.exit(0));
+  };
+
+  process.on('SIGINT', shutdown);
+  process.on('SIGTERM', shutdown);
+
+  return server;
 }
 
-function start(): void {
-  setup()
-    .then(() => {
-      app.listen(port, () => {
-        console.log(`⚡️[server]: Server is running at http://localhost:${port}/`);
-      });
-    })
-    .catch((error) => {
-      console.error(`❌[server]: Failed to start server: `, error.message);
-    });
+if (require.main === module) {
+  startServer().catch((error: unknown) => {
+    console.error('❌[server]: Failed to start server:', error);
+  });
 }
-
-start();

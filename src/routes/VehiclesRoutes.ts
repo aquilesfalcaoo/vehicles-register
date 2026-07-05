@@ -1,24 +1,31 @@
+import { Router, Request, Response } from 'express';
 import { VehiclesController } from '../controllers/VehiclesController';
-import express, { Router, Response, Request } from 'express';
 
 export class VehiclesRoutes {
-  private router: Router = express.Router();
-  private vehiclesController: VehiclesController = new VehiclesController();
+  private readonly router: Router;
+  private readonly vehiclesController: VehiclesController;
 
-  constructor() {
+  constructor(vehiclesController = new VehiclesController()) {
+    this.router = Router();
+    this.vehiclesController = vehiclesController;
     this.initializeRoutes();
   }
 
   private initializeRoutes(): void {
-    this.router.get('/', (req: Request, res: Response) => {
+    this.router.get('/', (_req: Request, res: Response) => {
       res.redirect('/api-docs');
     });
 
-    this.router.get('/vehicles', this.vehiclesController.getVehicles.bind(this.vehiclesController));
-    this.router.post('/vehicles', this.vehiclesController.addVehicle.bind(this.vehiclesController));
-    this.router.get('/vehicles/:id', this.vehiclesController.getVehicleById.bind(this.vehiclesController));
-    this.router.put('/vehicles/:id', this.vehiclesController.updateVehicle.bind(this.vehiclesController));
-    this.router.delete('/vehicles/:id', this.vehiclesController.deleteVehicle.bind(this.vehiclesController));
+    this.router
+      .route('/vehicles')
+      .get(this.vehiclesController.getVehicles.bind(this.vehiclesController))
+      .post(this.vehiclesController.addVehicle.bind(this.vehiclesController));
+
+    this.router
+      .route('/vehicles/:id')
+      .get(this.vehiclesController.getVehicleById.bind(this.vehiclesController))
+      .put(this.vehiclesController.updateVehicle.bind(this.vehiclesController))
+      .delete(this.vehiclesController.deleteVehicle.bind(this.vehiclesController));
   }
 
   public getRouter(): Router {

@@ -1,53 +1,223 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Vehicles Register",
-    "version": "1.0.0",
-    "description": "Vehicles register using Express.js, MongoDB and Jest"
+    "title": "Vehicle Registry API",
+    "version": "1.0.1",
+    "description": "RESTful API for vehicle registration built with TypeScript, Node.js and Express.js, featuring CRUD operations, MongoDB integration, applying Object-Oriented Programming (OOP), layered architecture, automated testing with Jest.",
+    "contact": {
+      "name": "Aquiles Falcão",
+      "url": "https://github.com/aquilesfalcaoo"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api-docs/",
+      "description": "Local Development"
+    },
+    {
+      "url": "https://YOUR_RENDER_URL/api",
+      "description": "Production"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Vehicles",
+      "description": "Operations related to vehicle management."
+    }
+  ],
+  "components": {
+    "parameters": {
+      "VehicleId": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "Vehicle identifier.",
+        "schema": {
+          "type": "string",
+          "example": "684bc9a2c41f0d2d9f7c321a"
+        }
+      }
+    },
+    "schemas": {
+      "Vehicle": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "684bc9a2c41f0d2d9f7c321a"
+          },
+          "model": {
+            "type": "string",
+            "example": "Toyota Corolla"
+          },
+          "isZeroKm": {
+            "type": "boolean",
+            "example": false
+          },
+          "licensePlate": {
+            "type": "string",
+            "example": "ABC1D23"
+          },
+          "color": {
+            "type": "string",
+            "example": "Black"
+          },
+          "renavam": {
+            "type": "string",
+            "example": "12345678901"
+          }
+        }
+      },
+      "VehicleRequest": {
+        "type": "object",
+        "required": ["model", "isZeroKm", "licensePlate", "color", "renavam"],
+        "properties": {
+          "model": {
+            "type": "string",
+            "example": "Toyota Corolla"
+          },
+          "isZeroKm": {
+            "type": "boolean",
+            "example": false
+          },
+          "licensePlate": {
+            "type": "string",
+            "example": "ABC1D23"
+          },
+          "color": {
+            "type": "string",
+            "example": "Black"
+          },
+          "renavam": {
+            "type": "string",
+            "example": "12345678901"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Invalid request body.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "message": "Invalid request body."
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Vehicle not found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "message": "Vehicle not found."
+            }
+          }
+        }
+      },
+      "Conflict": {
+        "description": "Vehicle already exists.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "message": "Vehicle with this license plate already exists."
+            }
+          }
+        }
+      },
+      "InternalServerError": {
+        "description": "Internal server error.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "message": "Internal server error."
+            }
+          }
+        }
+      }
+    }
   },
   "paths": {
     "/vehicles": {
       "get": {
         "tags": ["Vehicles"],
-        "summary": "Endpoint for obtaining vehicles data.",
+        "summary": "Returns all registered vehicles.",
         "responses": {
           "200": {
-            "description": "Vehicles successfully returned."
+            "description": "Vehicles successfully returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Vehicle"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           }
         }
       },
       "post": {
         "tags": ["Vehicles"],
-        "summary": "Endpoint for add a new vehicle data.",
+        "summary": "Creates a new vehicle.",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "model": {
-                    "type": "string"
-                  },
-                  "isZeroKm": {
-                    "type": "boolean"
-                  },
-                  "licensePlate": {
-                    "type": "string"
-                  },
-                  "color": {
-                    "type": "string"
-                  },
-                  "renavam": {
-                    "type": "string"
-                  }
-                }
+                "$ref": "#/components/schemas/VehicleRequest"
               }
             }
           }
         },
         "responses": {
-          "200": {
-            "description": "Vehicle added successfully."
+          "201": {
+            "description": "Vehicle successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Vehicle"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           }
         }
       }
@@ -55,87 +225,88 @@
     "/vehicles/{id}": {
       "get": {
         "tags": ["Vehicles"],
-        "summary": "Endpoint for obtaining a vehicle data by id.",
+        "summary": "Returns a vehicle by its identifier.",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Id of the vehicle to retrieve.",
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/components/parameters/VehicleId"
           }
         ],
         "responses": {
           "200": {
-            "description": "Vehicle successfully returned."
+            "description": "Vehicle successfully returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Vehicle"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           }
         }
       },
       "put": {
         "tags": ["Vehicles"],
-        "summary": "Endpoint for updating a vehicle data by id.",
+        "summary": "Updates a vehicle by its identifier.",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Id of the vehicle to update.",
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/components/parameters/VehicleId"
           }
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "model": {
-                    "type": "string"
-                  },
-                  "isZeroKm": {
-                    "type": "boolean"
-                  },
-                  "licensePlate": {
-                    "type": "string"
-                  },
-                  "color": {
-                    "type": "string"
-                  },
-                  "renavam": {
-                    "type": "string"
-                  }
-                }
+                "$ref": "#/components/schemas/VehicleRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Vehicle updated successfully."
+            "description": "Vehicle successfully updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Vehicle"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           }
         }
       },
       "delete": {
         "tags": ["Vehicles"],
-        "summary": "Endpoint for delete a vehicle data by id.",
+        "summary": "Deletes a vehicle by its identifier.",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Id of the vehicle to delete.",
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/components/parameters/VehicleId"
           }
         ],
         "responses": {
-          "200": {
-            "description": "Vehicle removed successfully."
+          "204": {
+            "description": "Vehicle successfully deleted."
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           }
         }
       }
