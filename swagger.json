@@ -19,7 +19,7 @@
       "description": "Local Development"
     },
     {
-      "url": "https://YOUR_RENDER_URL/api",
+      "url": "https://vehicles-register.onrender.com/api-docs/",
       "description": "Production"
     }
   ],
