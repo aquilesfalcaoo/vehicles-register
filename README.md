@@ -4,7 +4,17 @@ A RESTful API developed with Node.js, TypeScript, Express.js and MongoDB followi
 
 This project demonstrates modern software engineering practices including REST API design, automated testing with Jest, interactive API documentation using Swagger/OpenAPI and clean, maintainable code.
 
+## 🌐 Live Demo
+
+📖 Swagger Documentation
+
+https://vehicles-register.onrender.com/api-docs
+
+---
+
 ![screenshot](https://raw.githubusercontent.com/aquilesfalcaoo/vehicles-register/main/cover.png)
+
+---
 
 ## 🛠️ Tech Stack
 <p align="center">
@@ -37,7 +47,15 @@ The project was designed following Object-Oriented Programming (OOP) principles 
 - Layered Architecture
 - MongoDB Integration
 - Swagger Documentation
+- Error Handling
 - Automated Testing with Jest
+- Production Deployment on Render
+
+## ☁️ Deployment
+
+The application is automatically deployed on Render.
+
+Every update to the main branch triggers a new deployment, making the latest version immediately available online.
 
 ## ⚙️ Installation
 
@@ -45,13 +63,19 @@ To clone and run this application, you'll need [Git](https://git-scm.com), [Node
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/aquilesfalcaoo/vehicles-register
+$ git clone https://github.com/aquilesfalcaoo/vehicle-registry-api.git
 
 # Install dependencies
 $ yarn install
 
 # Run the app
 $ yarn run dev
+
+# Run the tests
+$ yarn run test
+
+# Run the coverage
+$ yarn run test:coverage
 
 # Open the application
 $ http://localhost:3000/api-docs/
